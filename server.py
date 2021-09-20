@@ -2,6 +2,10 @@
 import socketserver
 import os
 
+# This file has been modified from its orginal version.
+# Copyright 2021, Michael Boisvert
+# Copyright information for the original source is listed below:
+#
 # Copyright 2013 Abram Hindle, Eddie Antonio Santos
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
