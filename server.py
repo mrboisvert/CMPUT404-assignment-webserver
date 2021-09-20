@@ -1,15 +1,15 @@
-#  coding: utf-8 
+#  coding: utf-8
 import socketserver
 import os
 
 # Copyright 2013 Abram Hindle, Eddie Antonio Santos
-# 
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -29,7 +29,7 @@ import os
 
 
 class MyWebServer(socketserver.BaseRequestHandler):
-    
+
     def handle(self):
         self.data = self.request.recv(1024).strip()
         print ("Got a request of: %s\n" % self.data)
@@ -42,10 +42,18 @@ class MyWebServer(socketserver.BaseRequestHandler):
             return
 
         requested_file = "www" + status_line[1]
+
+        # validate that the requested content is within the root folder
+        root = os.path.abspath("www/")
+        requested_file_absolute_path = os.path.abspath(requested_file)
+        if not requested_file_absolute_path.startswith(root):
+            self.request.sendall(bytearray("HTTP/1.1 404 Not found",'utf-8'))
+            return
+
         if os.path.isdir(requested_file):
             if requested_file.endswith("/"):
                 # If the request is a directory send the relative index.html
-                requested_file += "index.html" 
+                requested_file += "index.html"
             else:
                 # Use a 301 code to correct the path
                 self.request.sendall(bytearray("HTTP/1.1 301 Moved Permanently\r\n",'utf-8'))
