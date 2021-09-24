@@ -1,11 +1,9 @@
 #  coding: utf-8
 import socketserver
 import os
+import urllib.parse
 
-# This file has been modified from its orginal version.
-# Copyright 2021, Michael Boisvert
-# Copyright information for the original source is listed below:
-#
+# Copyrigh 2021 Michael Boisvert
 # Copyright 2013 Abram Hindle, Eddie Antonio Santos
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
